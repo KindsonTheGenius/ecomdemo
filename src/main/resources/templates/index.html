@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ecommerce Demo</title>
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet" />
+    <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/main.js}"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">Ecommerce Demo App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+    </div>
+</nav>
+
+<main role="main" class="container">
+<hr>
+    <div><center>List of Products</center></div>
+    <table class="table table-stripped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product:${products}">
+            <td th:text="${product.description}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.stock}"></td>
+            <td>
+                <div class="btn-group" data-toggle="modal" data-target="orderModal">
+                    <a id="orderButton"
+                       th:href="@{/newOrder/(id=${product.id},price=${product.price})}"
+                       class="btn btn-warning">Order One Now!</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <hr>
+    <div><center>List of Orders</center></div>
+    <table class="table table-stripped table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Number</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order:${orders}">
+            <td th:text="${order.summary.description}"></td>
+            <td th:text="${order.number}"></td>
+            <td th:text="${order.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</main><!-- /.container -->
+
+<div id="orderModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to place this order</p>
+            </div>
+            <div class="modal-footer">
+                <a href="" type="button" id="orderRef" class="btn btn-primary">Yes, Place Order!</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
